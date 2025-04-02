@@ -42,4 +42,10 @@ public class InMemoryBookRepository implements BookRepository {
         return Mono.fromRunnable(() -> books.remove(isbn))
                    .then();
     }
+
+    @Override
+    public Mono<Void> deleteAll() {
+        return Mono.fromRunnable(() -> books.clear())
+                   .then();
+    }
 } 

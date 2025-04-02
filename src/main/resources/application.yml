@@ -1,6 +1,19 @@
 spring:
   application:
     name: catalog-service
+  config:
+    import: "configserver:"
+  cloud:
+    config:
+      uri: http://localhost:8888
+      request-connect-timeout: 5000
+      request-read-timeout: 5000
+      fail-fast: true
+      retry:
+        initial-interval: 1000
+        max-attempts: 3
+        max-interval: 2000
+        multiplier: 1.1
 
 server:
   port: 9001
@@ -10,3 +23,9 @@ server:
     threads:
       max: 50
       min-spare: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh

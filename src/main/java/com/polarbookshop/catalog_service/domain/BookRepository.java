@@ -16,4 +16,5 @@ public interface BookRepository {
 
     Mono<Void> deleteByIsbn(String isbn); // Return Mono<Void>
 
+    Mono<Void> deleteAll(); // Return Mono<Void>
 } 
