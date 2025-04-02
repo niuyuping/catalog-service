@@ -23,7 +23,7 @@ public class BookJsonTests {
             }
             """;
 
-    private Book book = new Book("1234567890", "Title", "Author", 9.90);
+    private Book book = Book.of("1234567890", "Title", "Author", 9.90);
 
     @Test
     void testSerialize() throws Exception {

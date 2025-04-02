@@ -52,10 +52,12 @@ public class BookService {
         return bookRepository.findByIsbn(isbn)
                 .flatMap(existingBook -> {
                     var bookToUpdate = new Book(
+                        existingBook.id(),
                         existingBook.isbn(),
                         book.title(),
                         book.author(),
-                        book.price()
+                        book.price(),
+                        existingBook.version()
                     );
                     return bookRepository.save(bookToUpdate);
                 })

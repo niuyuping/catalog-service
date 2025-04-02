@@ -40,6 +40,12 @@ dependencies {
 	testImplementation 'org.mockito:mockito-junit-jupiter'
 	
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+	// Spring Boot R2DBC Starter (包含了核心 R2DBC 和 Spring Data R2DBC)
+	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+
+	// PostgreSQL R2DBC 驱动
+	runtimeOnly 'org.postgresql:r2dbc-postgresql'
 }
 
 dependencyManagement {

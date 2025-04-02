@@ -47,15 +47,15 @@ class CatalogServiceApplicationTests {
 	/**
 	 * 用于在 setUp 中创建的书籍对象。
 	 */
-	private Book bookToCreate = new Book(existingIsbn, "Title", "Author", 9.90);
+	private Book bookToCreate = Book.of(existingIsbn, "Title", "Author", 9.90);
 	/**
 	 * 用于测试更新操作的书籍对象 (与 bookToCreate 具有相同的 ISBN)。
 	 */
-	private Book bookToUpdate = new Book(existingIsbn, "Updated Title", "Updated Author", 19.90);
+	private Book bookToUpdate = Book.of(existingIsbn, "Updated Title", "Updated Author", 19.90);
 	/**
 	 * 另一个用于在 setUp 中创建的书籍对象，主要用于后续的删除测试。
 	 */
-	private Book bookToDelete = new Book(isbnForDelete, "Title for delete", "Author for delete", 9.90);
+	private Book bookToDelete = Book.of(isbnForDelete, "Title for delete", "Author for delete", 9.90);
 
 	/**
 	 * 在所有测试方法运行之前执行一次。

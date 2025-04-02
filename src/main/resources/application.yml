@@ -14,6 +14,18 @@ spring:
         max-attempts: 3
         max-interval: 2000
         multiplier: 1.1
+  datasource:
+    url: r2dbc:postgresql://localhost:5432/polardb_catalog
+    username: admin
+    password: Ping808888
+    hikari:
+      connection-timeout: 2000
+      maximum-pool-size: 5
+      
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/polardb_catalog
+    username: admin
+    password: Ping808888
 
 server:
   port: 9001
