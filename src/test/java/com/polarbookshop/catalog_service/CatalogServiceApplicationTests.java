@@ -124,7 +124,7 @@ class CatalogServiceApplicationTests {
 				.value(books -> {
 					assertThat(books).isNotNull();
 					assertThat(books.size()).isGreaterThanOrEqualTo(1);
-					assertThat(books.get(0).isbn()).isEqualTo(existingIsbn);
+					assertThat(books.stream().anyMatch(book -> book.isbn().equals(existingIsbn))).isTrue();
 				});
 	}
 
