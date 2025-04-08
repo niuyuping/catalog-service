@@ -1,0 +1,11 @@
+# spring:
+#   r2dbc:
+#     url: r2dbc:tc:postgresql:17.4:///polardb_catalog?TC_IMAGE_TAG=17.4
+#     pool:
+#       initial-size: 5
+#       max-size: 5
+#       max-create-connection-time: 20s
+
+#   flyway:
+#     enabled: true
+#     url: jdbc:tc:postgresql:17.4:///polardb_catalog

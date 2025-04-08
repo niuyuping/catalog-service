@@ -25,6 +25,7 @@ configurations {
 
 ext {
 	set('springCloudVersion', "2024.0.1")
+	set('testcontainersVersion', "1.20.6")
 }
 
 dependencies {
@@ -34,10 +35,18 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.retry:spring-retry'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-database-postgresql'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.mockito:mockito-junit-jupiter'
+	testImplementation 'org.testcontainers:r2dbc'
+	testImplementation 'org.testcontainers:testcontainers'
+	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'org.testcontainers:junit-jupiter'
 	
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
@@ -46,14 +55,21 @@ dependencies {
 
 	// PostgreSQL R2DBC 驱动
 	runtimeOnly 'org.postgresql:r2dbc-postgresql'
+	// PostgreSQL Driver
+	runtimeOnly 'org.postgresql:postgresql'
 }
 
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
 	}
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+bootRun {
+	systemProperty 'spring.profiles.active', 'test'
 }

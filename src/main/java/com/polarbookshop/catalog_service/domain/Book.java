@@ -1,11 +1,17 @@
 package com.polarbookshop.catalog_service.domain;
 
+import java.time.Instant;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.PositiveOrZero;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
+
 public record Book(
     @Id
     Long id,
@@ -27,10 +33,18 @@ public record Book(
     @PositiveOrZero(message = "The book price must be zero or positive.")
     Double price,
 
+    String publisher,
+    
     @Version
-    int version
+    int version,
+
+    @CreatedDate
+    Instant createdDate,
+
+    @LastModifiedDate
+    Instant lastModifiedDate
 ) {
-    public static Book of(String isbn, String title, String author, Double price) {
-        return new Book(null, isbn, title, author, price, 0);
+    public static Book of(String isbn, String title, String author, Double price, String publisher) {
+        return new Book(null, isbn, title, author, price, publisher, 0, null, null);
     }
 }

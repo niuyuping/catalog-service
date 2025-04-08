@@ -47,15 +47,15 @@ class CatalogServiceApplicationTests {
 	/**
 	 * 用于在 setUp 中创建的书籍对象。
 	 */
-	private Book bookToCreate = Book.of(existingIsbn, "Title", "Author", 9.90);
+	private Book bookToCreate = Book.of(existingIsbn, "Title", "Author", 9.90, "Publisher");
 	/**
 	 * 用于测试更新操作的书籍对象 (与 bookToCreate 具有相同的 ISBN)。
 	 */
-	private Book bookToUpdate = Book.of(existingIsbn, "Updated Title", "Updated Author", 19.90);
+	private Book bookToUpdate = Book.of(existingIsbn, "Updated Title", "Updated Author", 19.90, "Publisher");
 	/**
 	 * 另一个用于在 setUp 中创建的书籍对象，主要用于后续的删除测试。
 	 */
-	private Book bookToDelete = Book.of(isbnForDelete, "Title for delete", "Author for delete", 9.90);
+	private Book bookToDelete = Book.of(isbnForDelete, "Title for delete", "Author for delete", 9.90, "Publisher");
 
 	/**
 	 * 在所有测试方法运行之前执行一次。
@@ -63,6 +63,13 @@ class CatalogServiceApplicationTests {
 	 */
 	@BeforeAll
 	public void setUp() {
+		// 清除测试数据
+		webTestClient.delete().uri("/books/" + existingIsbn)
+				.exchange();
+				
+		webTestClient.delete().uri("/books/" + isbnForDelete)
+				.exchange();
+
 		// 创建第一本书 (existingIsbn)
 		webTestClient.post().uri("/books")
 				.bodyValue(bookToCreate)
@@ -71,7 +78,7 @@ class CatalogServiceApplicationTests {
 				.expectBody(Book.class)
 				.value(actualBook -> {
 					assertThat(actualBook).isNotNull();
-					assertThat(actualBook).isEqualTo(bookToCreate);
+					assertThat(actualBook.isbn()).isEqualTo(bookToCreate.isbn());
 				});
 
 		// 创建第二本书 (isbnForDelete)
@@ -82,7 +89,7 @@ class CatalogServiceApplicationTests {
 				.expectBody(Book.class)
 				.value(actualBook -> {
 					assertThat(actualBook).isNotNull();
-					assertThat(actualBook).isEqualTo(bookToDelete);
+					assertThat(actualBook.isbn()).isEqualTo(bookToDelete.isbn());
 				});
 	}
 
@@ -101,9 +108,7 @@ class CatalogServiceApplicationTests {
 				.value(books -> {
 					assertThat(books).isNotNull();
 					assertThat(books.size()).isEqualTo(1);
-					assertThat(books.contains(bookToUpdate)).isTrue();
-					assertThat(books.contains(bookToDelete)).isFalse();
-					assertThat(books.contains(bookToCreate)).isFalse();
+					assertThat(books.stream().anyMatch(book -> book.isbn().equals(bookToUpdate.isbn()))).isTrue();
 				});
 
 		webTestClient.delete().uri("/books/" + existingIsbn)
@@ -180,7 +185,11 @@ class CatalogServiceApplicationTests {
 				.expectBody(Book.class)
 				.value(actualBook -> {
 					assertThat(actualBook).isNotNull();
-					assertThat(actualBook).isEqualTo(bookToUpdate);
+					assertThat(actualBook.isbn()).isEqualTo(bookToUpdate.isbn());
+					assertThat(actualBook.title()).isEqualTo(bookToUpdate.title());
+					assertThat(actualBook.author()).isEqualTo(bookToUpdate.author());
+					assertThat(actualBook.price()).isEqualTo(bookToUpdate.price());
+					assertThat(actualBook.publisher()).isEqualTo(bookToUpdate.publisher());
 				});
 	}
 

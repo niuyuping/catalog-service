@@ -19,11 +19,12 @@ public class BookJsonTests {
                 "isbn": "1234567890",
                 "title": "Title",
                 "author": "Author",
-                "price": 9.90
+                "price": 9.90,
+                "publisher": "Publisher"
             }
             """;
 
-    private Book book = Book.of("1234567890", "Title", "Author", 9.90);
+    private Book book = Book.of("1234567890", "Title", "Author", 9.90, "Publisher");
 
     @Test
     void testSerialize() throws Exception {
@@ -36,6 +37,8 @@ public class BookJsonTests {
                 .isEqualTo(book.author());
         assertThat(jsonContent).extractingJsonPathNumberValue("@.price")
                 .isEqualTo(9.90);
+        assertThat(jsonContent).extractingJsonPathStringValue("@.publisher")
+                .isEqualTo(book.publisher());
     }
 
     @Test

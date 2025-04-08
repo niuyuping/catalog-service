@@ -27,7 +27,7 @@ class BookServiceTests {
     @Test
     void whenBookExistsThenAddBookThrowsException() {
         // 准备测试数据
-        var book = Book.of("1234567890", "Title", "Author", 9.90);
+        var book = Book.of("1234567890", "Title", "Author", 9.90, "Publisher");
         
         // 模拟 BookRepository 的行为
         given(bookRepository.existsByIsbn(book.isbn()))

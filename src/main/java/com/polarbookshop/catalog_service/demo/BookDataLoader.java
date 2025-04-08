@@ -30,14 +30,13 @@ public class BookDataLoader {
     public void loadBookTestData() {
         log.info("Test data loading is enabled. Starting...");
 
-        var book1 = Book.of("1234567891", "Northern Lights", "Lyra Silverstar", 9.90);
-        var book2 = Book.of("1234567892", "Polar Journey", "Iorek Polarson", 12.90);
+        var book1 = Book.of("1234567891", "Northern Lights", "Lyra Silverstar", 9.90, "Publisher");
+        var book2 = Book.of("1234567892", "Polar Journey", "Iorek Polarson", 12.90, "Publisher");
 
         bookRepository.deleteAll()
             .thenMany(
                 Flux.concat(
-                        bookRepository.save(book1),
-                        bookRepository.save(book2)
+                        bookRepository.saveAll(Flux.just(book1, book2))
                     )
                     .doOnNext(book -> log.info("Book saved: {}", book.isbn()))
             )

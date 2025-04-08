@@ -34,8 +34,8 @@ class BookControllerFluxTests {
     // --- 测试数据 ---
     private final String existingIsbn = "1234567891";
     private final String nonExistentIsbn = "9876543210";
-    private final List<Book> expectedBooks = List.of(Book.of(existingIsbn, "Title", "Author", 9.90),
-            Book.of("1234567892", "Title2", "Author2", 19.90));
+    private final List<Book> expectedBooks = List.of(Book.of(existingIsbn, "Title", "Author", 9.90, "Publisher"),
+            Book.of("1234567892", "Title2", "Author2", 19.90, "Publisher"));
 
     /**
      * 测试场景：当请求所有书籍时，应返回书籍列表。
@@ -115,7 +115,7 @@ class BookControllerFluxTests {
      */
     @Test
     void whenPostBookWithInvalidIsbnThenReturnBadRequest() throws Exception {
-        var bookToCreate = Book.of("invalidIsbn", "Title", "Author", 9.90);
+        var bookToCreate = Book.of("invalidIsbn", "Title", "Author", 9.90, "Publisher");
         // 注意：此处无需 mock bookService，因为验证发生在 Service 调用之前
         webTestClient.post().uri("/books").bodyValue(bookToCreate).exchange()
                 .expectStatus().isBadRequest()
