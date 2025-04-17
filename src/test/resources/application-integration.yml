@@ -1,11 +1,16 @@
-# spring:
-#   r2dbc:
-#     url: r2dbc:tc:postgresql:17.4:///polardb_catalog?TC_IMAGE_TAG=17.4
-#     pool:
-#       initial-size: 5
-#       max-size: 5
-#       max-create-connection-time: 20s
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://dummy:5432/test # Placeholder, will be overridden
+    # username: user # Removed, will be overridden
+    # password: password # Removed, will be overridden
+    pool:
+      enabled: false # Explicitly disable pooling to test timing issue
+      initial-size: 5
+      max-size: 5
+      max-create-connection-time: 20s
 
-#   flyway:
-#     enabled: true
-#     url: jdbc:tc:postgresql:17.4:///polardb_catalog
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://dummy:5432/test # Placeholder, will be overridden
+    # user: user # Removed, will be overridden
+    # password: password # Removed, will be overridden
