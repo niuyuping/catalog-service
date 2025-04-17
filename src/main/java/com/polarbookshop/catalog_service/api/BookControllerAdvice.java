@@ -12,7 +12,8 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestControllerAdvice // Indicates this class provides centralized exception handling for REST controllers
+@RestControllerAdvice // Indicates this class provides centralized exception handling for REST
+                      // controllers
 public class BookControllerAdvice {
 
     @ExceptionHandler(BookNotFoundException.class) // Handle BookNotFoundException
@@ -22,7 +23,8 @@ public class BookControllerAdvice {
     }
 
     @ExceptionHandler(BookAlreadyExistsException.class) // Handle BookAlreadyExistsException
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY) // Set HTTP status to 422 (Unprocessable Entity) - common for business rule violations like duplicates
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY) // Set HTTP status to 422 (Unprocessable Entity) - common for
+                                                     // business rule violations like duplicates
     public Mono<String> handleBookAlreadyExists(BookAlreadyExistsException ex) {
         return Mono.just(ex.getMessage()); // Return the exception message
     }
@@ -39,4 +41,4 @@ public class BookControllerAdvice {
         return Mono.just(errors); // Return a map of field names to error messages
     }
 
-} 
+}

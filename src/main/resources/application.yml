@@ -18,7 +18,7 @@ spring:
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/polardb_catalog
     username: admin
-    password: ping808888
+    password: Ping808888
     pool:
       initial-size: 5
       max-size: 5
@@ -28,7 +28,7 @@ spring:
     enabled: true
     url: jdbc:postgresql://localhost:5432/polardb_catalog
     user: admin
-    password: ping808888
+    password: Ping808888
 
 server:
   port: 9001

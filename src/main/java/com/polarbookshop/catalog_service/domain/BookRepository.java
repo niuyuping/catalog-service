@@ -23,4 +23,4 @@ public interface BookRepository extends ReactiveCrudRepository<Book, Long> {
     Mono<Void> deleteByIsbn(String isbn); // Return Mono<Void>
 
     // Mono<Void> deleteAll(); // Return Mono<Void>
-} 
+}

@@ -46,4 +46,4 @@ public class BookController {
         return bookMono.flatMap(book -> bookService.editBookDetails(isbn, book));
     }
 
-} 
+}

@@ -66,7 +66,7 @@ class CatalogServiceApplicationTests {
 		// 清除测试数据
 		webTestClient.delete().uri("/books/" + existingIsbn)
 				.exchange();
-				
+
 		webTestClient.delete().uri("/books/" + isbnForDelete)
 				.exchange();
 

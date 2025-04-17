@@ -13,37 +13,23 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public record Book(
-    @Id
-    Long id,
+        @Id Long id,
 
-    @NotBlank(message = "The book ISBN must be defined.")
-    @Pattern(
-        regexp = "^([0-9]{10}|[0-9]{13})$",
-        message = "The ISBN format must be valid (10 or 13 digits)."
-    )
-    String isbn,
+        @NotBlank(message = "The book ISBN must be defined.") @Pattern(regexp = "^([0-9]{10}|[0-9]{13})$", message = "The ISBN format must be valid (10 or 13 digits).") String isbn,
 
-    @NotBlank(message = "The book title must be defined.")
-    String title,
+        @NotBlank(message = "The book title must be defined.") String title,
 
-    @NotBlank(message = "The book author must be defined.")
-    String author,
+        @NotBlank(message = "The book author must be defined.") String author,
 
-    @NotNull(message = "The book price must be defined.")
-    @PositiveOrZero(message = "The book price must be zero or positive.")
-    Double price,
+        @NotNull(message = "The book price must be defined.") @PositiveOrZero(message = "The book price must be zero or positive.") Double price,
 
-    String publisher,
-    
-    @Version
-    int version,
+        String publisher,
 
-    @CreatedDate
-    Instant createdDate,
+        @Version int version,
 
-    @LastModifiedDate
-    Instant lastModifiedDate
-) {
+        @CreatedDate Instant createdDate,
+
+        @LastModifiedDate Instant lastModifiedDate) {
     public static Book of(String isbn, String title, String author, Double price, String publisher) {
         return new Book(null, isbn, title, author, price, publisher, 0, null, null);
     }
