@@ -11,9 +11,9 @@ spring:
       fail-fast: true
       retry:
         initial-interval: 1000
-        max-attempts: 3
-        max-interval: 2000
-        multiplier: 1.1
+        max-attempts: 6
+        max-interval: 5000
+        multiplier: 1.5
       
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/polardb_catalog
