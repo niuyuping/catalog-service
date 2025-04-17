@@ -66,7 +66,7 @@ jobs:
         uses: anchore/scan-action@v3
         id: scan
         with:
-          path: "${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
+          image: "${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
           fail-build: true
           severity-cutoff: high
       - name: Upload vulnerability report
@@ -79,7 +79,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY_URL }}
           username: ${{ github.actor }}
-          password: ${{ secrets.REGISTRY_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish container image
         run: |
           docker push ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
