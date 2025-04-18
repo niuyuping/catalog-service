@@ -77,7 +77,7 @@ bootRun {
 bootBuildImage {
 	imageName = "${project.name}"
 	environment = ['BP_JVM_VERSION': '21.*']
-	builder = "paketobuildpacks/builder-jammy-full"
+	builder = "paketobuildpacks/builder-jammy-base"
 	docker {
 		publishRegistry {
 			username = project.findProperty('registryUsername')
