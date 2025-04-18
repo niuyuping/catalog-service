@@ -29,7 +29,7 @@ jobs:
           chmod +x gradlew
           ./gradlew build
       - name: Code vulnerability scanning
-        uses: anchore/scan-action@v3
+        uses: anchore/scan-action@v6
         id: scan
         with:
           path: "${{ github.workspace }}"
