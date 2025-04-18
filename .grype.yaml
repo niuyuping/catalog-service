@@ -1,0 +1,7 @@
+ignore:
+  # 忽略特定包中的特定漏洞
+  - vulnerability: CVE-2022-1271  # 指定要忽略的 CVE ID
+    package:
+      name: gzip                   # 匹配包名
+      version: "1.10"             # 匹配报告中检测到的版本
+      type: binary                # 匹配报告中的类型
