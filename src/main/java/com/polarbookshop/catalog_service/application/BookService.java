@@ -40,7 +40,9 @@ public class BookService {
   }
 
   public Mono<Void> removeBookFromCatalog(String isbn) {
-    return bookRepository.deleteByIsbn(isbn);
+    return bookRepository.findByIsbn(isbn)
+      .switchIfEmpty(Mono.error(new BookNotFoundException(isbn)))
+      .flatMap(book -> bookRepository.deleteByIsbn(book.isbn()));
   }
 
   public Mono<Book> editBookDetails(String isbn, Book book) {

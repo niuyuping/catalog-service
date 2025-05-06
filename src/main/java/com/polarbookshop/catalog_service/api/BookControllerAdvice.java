@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.support.WebExchangeBindException;
 import reactor.core.publisher.Mono;
 
 @RestControllerAdvice
@@ -29,10 +29,10 @@ public class BookControllerAdvice {
     return Mono.just(ex.getMessage());
   }
 
-  @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ExceptionHandler(WebExchangeBindException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Mono<Map<String, String>> handleValidationException(
-    MethodArgumentNotValidException ex
+    WebExchangeBindException ex
   ) {
     final Map<String, String> errors = ex
       .getBindingResult()
@@ -43,7 +43,7 @@ public class BookControllerAdvice {
       .collect(
         Collectors.toMap(
           FieldError::getField,
-          FieldError::getDefaultMessage,
+          fieldError -> fieldError.getDefaultMessage() != null ? fieldError.getDefaultMessage() : "Validation failed",
           (existingValue, newValue) -> existingValue
         )
       );
