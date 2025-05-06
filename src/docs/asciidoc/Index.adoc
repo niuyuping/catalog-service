@@ -1,0 +1,31 @@
+= Catalog Service API Documentation
+Polar Bookshop
+v1.0.0 | {today}
+
+[[overview]]
+== 概述
+
+欢迎使用目录服务 API 文档。
+
+[[greeting]]
+== 问候语
+
+检索欢迎消息。
+
+=== cURL 请求
+include::{snippets}/get-greeting/curl-request.adoc[]
+
+=== Httpie 请求
+include::{snippets}/get-greeting/httpie-request.adoc[]
+
+=== HTTP 请求
+include::{snippets}/get-greeting/http-request.adoc[]
+
+=== HTTP 响应
+include::{snippets}/get-greeting/http-response.adoc[]
+
+=== 请求正文
+include::{snippets}/get-greeting/request-body.adoc[]
+
+=== 响应正文
+include::{snippets}/get-greeting/response-body.adoc[]

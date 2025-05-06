@@ -1,23 +1,41 @@
 package com.polarbookshop.catalog_service.api;
 
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestBody;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseBody;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@WebFluxTest(HomeController.class) // 指定测试目标为 HomeController
+@WebFluxTest(HomeController.class)
+@AutoConfigureRestDocs
 class HomeControllerTest {
 
-    @Autowired
-    private WebTestClient webClient; // 注入 WebTestClient 用于发送 HTTP 请求
+  @Autowired
+  private WebTestClient webClient;
 
-    @Test
-    void whenGetRootThenReturnWelcomeMessage() {
-        webClient
-            .get().uri("/") // 发送 GET 请求到 "/"
-            .exchange() // 执行请求
-            .expectStatus().isOk() // 验证 HTTP 状态码为 200 OK
-            .expectBody(String.class) // 期望响应体是 String 类型
-            .isEqualTo("Welcome to the book catalog!"); // 验证响应体内容
-    }
-} 
+  @Test
+  void whenGetRootThenReturnWelcomeMessage() {
+    webClient
+      .get()
+      .uri("/")
+      .exchange()
+      .expectStatus()
+      .isOk()
+      .expectBody(String.class)
+      .isEqualTo("Welcome to the book catalog!")
+      .consumeWith(
+        document(
+          "get-greeting",
+          preprocessRequest(prettyPrint()),
+          preprocessResponse(prettyPrint()),
+          requestBody(),
+          responseBody()
+        )
+      );
+  }
+}

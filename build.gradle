@@ -1,7 +1,10 @@
+import org.asciidoctor.gradle.jvm.AsciidoctorTask
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.asciidoctor.jvm.convert' version '4.0.4'
 }
 
 group = 'com.polarbookshop'
@@ -19,9 +22,30 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
+}
+
+ext {
+	snippetsDir = file('build/generated-snippets')
+}
+
+tasks.named('asciidoctor', AsciidoctorTask) {
+	inputs.dir snippetsDir
+	dependsOn tasks.named('test')
+
+	attributes([
+			"snippets": snippetsDir.absolutePath,
+			"doctype": "book",
+			"icons": "font",
+			"source-highlighter": "highlightjs",
+			"toc": "left",
+			"toclevels": 4,
+			"sectlinks": ""
+	])
 }
 
 tasks.named('bootBuildImage') {
