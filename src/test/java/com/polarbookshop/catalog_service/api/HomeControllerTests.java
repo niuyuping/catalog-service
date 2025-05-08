@@ -13,7 +13,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 @WebFluxTest(HomeController.class)
 @AutoConfigureRestDocs
-class HomeControllerTest {
+class HomeControllerTests {
 
   @Autowired
   private WebTestClient webClient;
